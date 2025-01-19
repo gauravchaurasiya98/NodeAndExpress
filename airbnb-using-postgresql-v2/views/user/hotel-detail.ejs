@@ -1,0 +1,38 @@
+<%- include('../partials/head-html') %>
+<main class="container mx-auto px-4 py-4">
+  <div class="flex justify-center items-center">
+    <div class="bg-white rounded-lg shadow-md w-4/5 md:w-3/5 lg:w-2/5 p-6">
+      <!-- Hotel Image -->
+      <img 
+        src="<%= hotel.photoUrl %>" 
+        alt="<%= hotel.name %>" 
+        class="w-full h-64 object-cover rounded-md mb-6">
+
+      <!-- Hotel Name -->
+      <h1 class="text-2xl font-semibold text-gray-800 mb-2"><%= hotel.name %></h1>
+
+      <!-- Location -->
+      <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt mr-2 text-red-500"></i><%= hotel.location %></p>
+
+      <!-- Rating -->
+      <div class="flex items-center mb-4">
+        <span class="text-yellow-500 text-lg">
+          <%- "&#9733;".repeat(Math.round(hotel.rating)) %>
+        </span>
+        <span class="text-gray-600 ml-2">(<%= hotel.rating %>)</span>
+      </div>
+
+      <!-- Price -->
+      <p class="text-xl font-bold text-gray-800">&#8377;<%= hotel.price %> / night</p>
+
+      <!-- Book Now Button -->
+      <div class="mt-6">
+        <button class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none">
+          Book Now
+        </button>
+      </div>
+    </div>
+  </div>
+</main>
+</body>
+</html>
