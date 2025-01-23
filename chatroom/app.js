@@ -18,22 +18,33 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
     credentials: true, // Allow cookies
   },
 });
 
+const corsOptions = {
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:5173",
+  credentials: true, // Allow cookies
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+};
+
 // CORS configuration
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true, // Allow cookies
-  })
-);
+app.use(cors(corsOptions));
+// Explicitly handle OPTIONS requests globally
+app.options("*", cors(corsOptions));
+
 // Middleware to parse cookie
 app.use(cookieParser());
 // Middleware to parse json body
 app.use(express.json());
+
+app.get("/health", (req, res) => {
+  res.json({
+    status: "Up and running...!",
+    allowedOrigin: process.env.CLIENT_ORIGIN,
+  });
+});
 
 // Authentication routes (login, register, etc.)
 app.use("/auth", authRouter);
